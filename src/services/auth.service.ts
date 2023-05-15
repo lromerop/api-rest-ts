@@ -6,7 +6,7 @@ import { Auth } from "../interfaces/auth.interface";
 
 const registerUser = async ({ email, password, name, description }: User) => {
   const check = await UserModel.findOne({ email });
-  if ( check ) return "ALREADY_USER"
+  if ( check ) return "ALREADY_USER";
   const passwordHash = await encrypt(password);
   const registerUser = await UserModel.create({name, password: passwordHash, email, description})
   return registerUser;
@@ -14,7 +14,7 @@ const registerUser = async ({ email, password, name, description }: User) => {
 
 const loginUser = async ({ email, password }: Auth) => {
   const check = await UserModel.findOne({ email });
-  if ( !check ) return "NOT_FOUND_USER"
+  if ( !check ) return "NOT_FOUND_USER";
   const passwordHash = check.password;
   const correct = await compare(password, passwordHash)
   if ( !correct ) return "PASSWORD_INCORRECT";
